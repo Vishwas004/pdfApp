@@ -1,9 +1,9 @@
 name: Build APK with Buildozer
 
 on:
-  workflow_dispatch:  # allow manual trigger
+  workflow_dispatch:
   push:
-    branches: [main]  # or any branch you want
+    branches: [main]
 
 jobs:
   build:
@@ -13,14 +13,10 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🐳 Build APK in Docker (Official Image)
+      - name: 🐳 Build APK using official Buildozer container
         run: |
           docker run --rm -v ${{ github.workspace }}:/home/user/app \
-            ghcr.io/kivy/buildozer:latest bash -c "
-              cd /home/user/app &&
-              pip install --upgrade cython &&
-              buildozer android debug
-            "
+            ghcr.io/kivy/buildozer:latest buildozer android debug
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
