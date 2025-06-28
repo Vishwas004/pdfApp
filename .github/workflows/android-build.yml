@@ -13,10 +13,11 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🐳 Build APK using official Buildozer container
+      - name: 🐳 Build APK using official Buildozer Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/home/user/app \
-            ghcr.io/kivy/buildozer:latest buildozer android debug
+            ghcr.io/kivy/buildozer:latest \
+            /bin/bash -c "cd /home/user/app && buildozer android debug"
 
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
