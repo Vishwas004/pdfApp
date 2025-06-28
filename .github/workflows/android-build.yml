@@ -13,9 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Docker (for safety)
-        run: sudo apt-get install docker.io -y
-
       - name: Build APK using Buildozer Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/home/user/app \
@@ -26,3 +23,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: apk
+          path: bin/*.apk
